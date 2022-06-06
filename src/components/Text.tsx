@@ -117,7 +117,7 @@ export function CardDescription({ children }: ChildrenProp) {
 }
 
 const logoText = classnames(
-  textColor('text-accent'),
+  textColor('text-secondary'),
   fontWeight('font-bold'),
   fontSize('text-xl')
 )

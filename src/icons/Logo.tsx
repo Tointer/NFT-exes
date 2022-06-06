@@ -1,6 +1,6 @@
 import classnames, { fill } from 'classnames/tailwind'
 
-const fillFace = classnames(fill('fill-accent'))
+const fillFace = classnames(fill('fill-secondary'))
 
 export default function () {
   return (

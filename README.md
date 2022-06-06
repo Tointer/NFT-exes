@@ -28,3 +28,7 @@ Also, please, consider looking at `.env.sample`.
 - `npx vercel` — to deploy with Vercel
 
 Reference - https://vitejs.dev/guide/static-deploy.html#vercel-cli
+
+## Big thanks:
+
+Inspired by [this starter](https://github.com/Borodutch/frontend-starter)
