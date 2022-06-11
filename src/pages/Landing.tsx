@@ -16,34 +16,54 @@ const pageBox = classnames(
 )
 
 export default function () {
-  async function handleSubmit(e: string) {
-    const testAddress = '0xb23C6962c431524c154b3eA088fC3Ca0Dc4b0B94'
+  async function handleSubmit(targetAddress: string) {
+    targetAddress = '0x580D9eB64bE56f7F1d75e5EaA68a2a506a834Fd8' //for test purposes
     const zdk = new ZDK()
 
     const args = {
       where: {
-        ownerAddresses: [testAddress],
+        ownerAddresses: [targetAddress],
+        collectionAddresses: ['0xbCe3781ae7Ca1a5e050Bd9C4c77369867eBc307e'],
       },
+      includeFullDetails: true,
+      includeSalesHistory: true,
     }
     const response = await zdk.tokens(args)
-    response.tokens.nodes[0].token.image
+
+    const nftData: { image: string; name: string }[] = []
+    // response.tokens.nodes[0].sales[0].transactionInfo.
     console.log(response)
-    setTokens(response)
+    response.tokens.nodes.forEach((node) => {
+      console.log(node.sales)
+      console.log(node.events)
+      if (node.token.image === null || node.token.image === undefined) {
+        return
+      }
+      let image = node.token.image.url ?? ''
+      const name = node.token.name ?? '...'
+
+      if (node.token.image.url?.startsWith('ipfs://')) {
+        image = 'https://ipfs.io/ipfs/' + image.substring(7)
+      }
+
+      nftData.push({ image, name })
+    })
+
+    setTokens(nftData)
   }
 
-  const [tokens, setTokens] = useState<TokensQuery | null>(null)
+  const [tokens, setTokens] = useState<{ image: string; name: string }[]>([])
 
   return (
     <div className={pageBox}>
       <InitialCard handleSubmit={handleSubmit} />
+      <NFTCard
+        image={`data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' /></svg>`}
+        name={'test'}
+      />
       <div>
-        {tokens?.tokens.nodes.map((t) => {
-          return (
-            <NFTCard
-              image={t.token.image?.url ?? ''}
-              name={t.token.name ?? '...'}
-            />
-          )
+        {tokens.map((t) => {
+          return <NFTCard image={t.image} name={t.name} />
         })}
       </div>
     </div>
