@@ -14,25 +14,28 @@ export default function ({ handleSubmit }: myProps) {
   const [address, setAddress] = useState('')
 
   return (
-    <Card shadow color="accent" onlyWrap nospace>
-      <div className={initialCardWrapper}>
-        <HeaderText extraLeading>Connect to see your NFTs exes</HeaderText>
-        <BodyText>
-          <iframe
-            src="https://giphy.com/embed/sM4ALgO3D7F8k"
-            frameBorder="10"
-            width="100%"
-            allowFullScreen
-          ></iframe>
-        </BodyText>
+    <div className="bg-scott bg-cover w-full h-96 flex-col items-center justify-center">
+      <HeaderText extraLeading>Connect to see your NFTs exes</HeaderText>
+      {/* <iframe
+        src="https://giphy.com/embed/sM4ALgO3D7F8k"
+        frameBorder="10"
+        width="100%"
+        allowFullScreen
+      ></iframe> */}
+
+      <div>
         <div class="flex items-center justify-center">
           <form
+            className="w-full flex items-center justify-center"
             onSubmit={(e) => {
               e.preventDefault()
               handleSubmit(address)
             }}
           >
             <input
+              className="bg-gray-50 border border-gray-300 text-white-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-3/6 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="0x..."
+              required
               type="text"
               name="address"
               value={address}
@@ -44,6 +47,6 @@ export default function ({ handleSubmit }: myProps) {
           </form>
         </div>
       </div>
-    </Card>
+    </div>
   )
 }
