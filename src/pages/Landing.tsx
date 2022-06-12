@@ -117,9 +117,8 @@ export default function () {
     { image: string; name: string; exes: Map<string, string> }[]
   >([])
 
-  return (
-    <div className={pageBox}>
-      <InitialCard handleSubmit={handleSubmit} />
+  function createTestCard() {
+    return (
       <NFTCard
         image={`data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' /></svg>`}
         name={'test'}
@@ -130,10 +129,42 @@ export default function () {
           ])
         }
       />
-      <div>
+    )
+  }
+
+  return (
+    <div className={pageBox}>
+      <InitialCard handleSubmit={handleSubmit} />
+      {/* <div className="grid grid-cols-4 justify-center w-full place-content-evenly place-items-center gap-y-10 mt-10">
         {tokens.map((t) => {
           return <NFTCard image={t.image} name={t.name} exes={t.exes} />
         })}
+      </div> */}
+      <div className="grid grid-cols-4 items-start justify-items-center w-full gap-y-10 mt-10">
+        <div className="flex-col space-y-10">
+          {tokens.map((t, i) => {
+            if (i % 4 == 0)
+              return <NFTCard image={t.image} name={t.name} exes={t.exes} />
+          })}
+        </div>
+        <div className="flex-col space-y-10">
+          {tokens.map((t, i) => {
+            if (i % 4 == 1)
+              return <NFTCard image={t.image} name={t.name} exes={t.exes} />
+          })}
+        </div>
+        <div className="flex-col space-y-10">
+          {tokens.map((t, i) => {
+            if (i % 4 == 2)
+              return <NFTCard image={t.image} name={t.name} exes={t.exes} />
+          })}
+        </div>
+        <div className="flex-col space-y-10">
+          {tokens.map((t, i) => {
+            if (i % 4 == 3)
+              return <NFTCard image={t.image} name={t.name} exes={t.exes} />
+          })}
+        </div>
       </div>
     </div>
   )
