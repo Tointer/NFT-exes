@@ -6,6 +6,9 @@ module.exports = {
     require('tailwind-scrollbar-hide'),
   ],
   theme: {
+    backgroundImage: {
+      scott: "url('../public/img/scott.gif')",
+    },
     fontFamily: {
       primary: ['"Space Grotesk"', 'sans-serif'],
     },
