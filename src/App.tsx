@@ -13,8 +13,6 @@ export default function () {
   return (
     <Root>
       <Router>
-        <Navbar />
-        <ToastContainer position="bottom-right" theme="dark" />
         <Routes>
           <Route
             path="/"
