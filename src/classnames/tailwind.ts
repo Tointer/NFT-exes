@@ -306,17 +306,7 @@ export type TBackgroundPosition =
 
 export type TBackgroundSize = 'bg-auto' | 'bg-cover' | 'bg-contain'
 
-export type TBackgroundImage =
-  | 'bg-none'
-  | 'bg-gradient-to-t'
-  | 'bg-gradient-to-tr'
-  | 'bg-gradient-to-r'
-  | 'bg-gradient-to-br'
-  | 'bg-gradient-to-b'
-  | 'bg-gradient-to-bl'
-  | 'bg-gradient-to-l'
-  | 'bg-gradient-to-tl'
-  | 'bg-noise'
+export type TBackgroundImage = 'bg-scott' | 'bg-noise'
 
 export type TGradientColorStops =
   | 'from-inherit'
