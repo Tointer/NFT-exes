@@ -9,12 +9,12 @@ import { ZDK, EventsQueryArgs, TokensQueryArgs } from '@zoralabs/zdk'
 import {
   EventType,
   EventsQuery,
-  TokenSortKey,
-  SortDirection,
-  MarketCategory,
+  TokensQuery,
 } from '@zoralabs/zdk/dist/queries/queries-sdk'
-import { useState } from 'react'
-import { TokenQuery, TokensQuery } from '@zoralabs/zdk/dist/queries/queries-sdk'
+import { useState, useEffect } from 'react'
+import apesNFTs from './boredApe.json'
+import punksNFTs from './punks.json'
+import famousAddresses from './addresses.json'
 
 const pageBox = classnames(
   display('flex'),
@@ -24,7 +24,7 @@ const pageBox = classnames(
 
 export default function () {
   async function handleSubmit(targetAddress: string) {
-    targetAddress = '0x580D9eB64bE56f7F1d75e5EaA68a2a506a834Fd8' //for test purposes
+    //targetAddress = '0x580D9eB64bE56f7F1d75e5EaA68a2a506a834Fd8' //for test purposes
     const zdk = new ZDK()
 
     const tokenArgs: TokensQueryArgs = {
@@ -32,13 +32,6 @@ export default function () {
         ownerAddresses: [targetAddress],
         //collectionAddresses: ['0xbCe3781ae7Ca1a5e050Bd9C4c77369867eBc307e'],
       },
-      sort: {
-        sortKey: TokenSortKey.NativePrice,
-        sortDirection: SortDirection.Desc,
-        sortAxis: MarketCategory.Offer,
-      },
-      includeFullDetails: false,
-      includeSalesHistory: false,
     }
     const tokenResponse = await zdk.tokens(tokenArgs)
 
@@ -117,17 +110,51 @@ export default function () {
     { image: string; name: string; exes: Map<string, string> }[]
   >([])
 
+  const [specialAddresses, setSpecialAddresses] = useState<{
+    famous: Set<string>
+    nftHolders: Set<string>
+  }>()
+
+  useEffect(() => {
+    const nftHolders: Set<string> = new Set()
+    for (let i = 0; i < apesNFTs.length; i++) {
+      nftHolders.add(apesNFTs[i].HolderAddress)
+    }
+    for (let i = 0; i < punksNFTs.length; i++) {
+      nftHolders.add(punksNFTs[i].HolderAddress)
+    }
+
+    const famous: Set<string> = new Set()
+    for (let i = 0; i < famousAddresses.populars.length; i++) {
+      famous.add(famousAddresses.populars[i].address)
+    }
+
+    setSpecialAddresses({ famous, nftHolders })
+  }, [])
+
+  function getAddressColor(address: string) {
+    if (specialAddresses?.famous.has(address)) {
+      return 'text-lime-500'
+    }
+    if (specialAddresses?.nftHolders.has(address)) {
+      return 'text-amber-500'
+    }
+    return ''
+  }
+
   function createTestCard() {
     return (
       <NFTCard
-        image={`data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' /></svg>`}
-        name={'test'}
+        image={`https://www.protocol.com/media-library/zora-logo-on-a-planet.png?id=29764762&width=1245&quality=85&coordinates=0%2C0%2C0%2C0&height=700`}
+        name={'Example item'}
         exes={
           new Map([
-            ['0xb23C6962c431524c154b3eA088fC3Ca0Dc4b0B94', '2d'],
-            ['0x7F08eEF0c62553b6B2ac3124a70AABaf467e6c8c', '100d'],
+            ['0xb23C6962c431524c154b3eA088fC3Ca0Dc4b0B94', 'this is me!'],
+            ['0xf896527c49b44aab3cf22ae356fa3af8e331f280', 'punk/BAYC holder'],
+            ['0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', 'famous persona'],
           ])
         }
+        colorFunction={getAddressColor}
       />
     )
   }
@@ -135,34 +162,58 @@ export default function () {
   return (
     <div className={pageBox}>
       <InitialCard handleSubmit={handleSubmit} />
-      {/* <div className="grid grid-cols-4 justify-center w-full place-content-evenly place-items-center gap-y-10 mt-10">
-        {tokens.map((t) => {
-          return <NFTCard image={t.image} name={t.name} exes={t.exes} />
-        })}
-      </div> */}
       <div className="grid grid-cols-4 items-start justify-items-center w-full gap-y-10 mt-10">
         <div className="flex-col space-y-10">
           {tokens.map((t, i) => {
             if (i % 4 == 0)
-              return <NFTCard image={t.image} name={t.name} exes={t.exes} />
+              return (
+                <NFTCard
+                  image={t.image}
+                  name={t.name}
+                  exes={t.exes}
+                  colorFunction={getAddressColor}
+                />
+              )
           })}
+          {createTestCard()}
         </div>
         <div className="flex-col space-y-10">
           {tokens.map((t, i) => {
             if (i % 4 == 1)
-              return <NFTCard image={t.image} name={t.name} exes={t.exes} />
+              return (
+                <NFTCard
+                  image={t.image}
+                  name={t.name}
+                  exes={t.exes}
+                  colorFunction={getAddressColor}
+                />
+              )
           })}
         </div>
         <div className="flex-col space-y-10">
           {tokens.map((t, i) => {
             if (i % 4 == 2)
-              return <NFTCard image={t.image} name={t.name} exes={t.exes} />
+              return (
+                <NFTCard
+                  image={t.image}
+                  name={t.name}
+                  exes={t.exes}
+                  colorFunction={getAddressColor}
+                />
+              )
           })}
         </div>
         <div className="flex-col space-y-10">
           {tokens.map((t, i) => {
             if (i % 4 == 3)
-              return <NFTCard image={t.image} name={t.name} exes={t.exes} />
+              return (
+                <NFTCard
+                  image={t.image}
+                  name={t.name}
+                  exes={t.exes}
+                  colorFunction={getAddressColor}
+                />
+              )
           })}
         </div>
       </div>
