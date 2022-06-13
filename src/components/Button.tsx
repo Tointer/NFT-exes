@@ -90,7 +90,6 @@ const colorClasses = ({
             loading || disabled ? undefined : 'active:text-accent'
           ),
           backgroundClip('bg-clip-text'),
-          backgroundImage('bg-gradient-to-r'),
           gradientColorStops('from-secondary', 'to-accent'),
           fontSize(fontSmall ? 'text-sm' : undefined)
         )

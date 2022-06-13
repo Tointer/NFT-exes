@@ -151,9 +151,6 @@ const linkText = (
     textColor(
       gradientFrom && gradientTo ? 'text-transparent' : color || 'text-accent'
     ),
-    backgroundImage(
-      gradientFrom && gradientTo ? 'bg-gradient-to-r' : undefined
-    ),
     backgroundClip(gradientFrom && gradientTo ? 'bg-clip-text' : undefined),
     gradientColorStops(gradientFrom, gradientTo),
     fontWeight(bold ? 'font-semibold' : 'font-normal')
