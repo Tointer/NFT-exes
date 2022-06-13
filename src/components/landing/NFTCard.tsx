@@ -13,6 +13,7 @@ interface NFTProps {
   image: string
   name: string
   exes: Map<string, string>
+  colorFunction: (address: string) => string
 }
 
 export default function (props: NFTProps) {
@@ -26,7 +27,11 @@ export default function (props: NFTProps) {
         {Array.from(props.exes).map(([key, value]) => {
           return (
             <p>
-              <a href={'https://etherscan.io/address/' + key} target="_blank">
+              <a
+                href={'https://etherscan.io/address/' + key}
+                target="_blank"
+                className={props.colorFunction(key)}
+              >
                 <ENSName
                   address={key}
                   provider={provider}

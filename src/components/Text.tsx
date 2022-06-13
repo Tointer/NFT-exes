@@ -13,6 +13,8 @@ import {
   textColor,
   textDecoration,
   width,
+  display,
+  alignItems,
 } from 'classnames/tailwind'
 import ChildrenProp from 'models/ChildrenProp'
 import useBreakpoints from 'hooks/useBreakpoints'
@@ -23,7 +25,8 @@ const headerText = (accent = false, extraLeading = false, xs = false) =>
     fontWeight('font-bold'),
     fontSize(xs ? 'text-2xl' : 'text-3xl', 'sm:text-4xl'),
     textColor(accent ? 'text-accent' : 'text-formal-accent'),
-    lineHeight(extraLeading ? 'leading-11' : 'leading-8')
+    lineHeight(extraLeading ? 'leading-11' : 'leading-8'),
+    textAlign('!text-center')
   )
 export function HeaderText({
   accent,
